@@ -52,6 +52,13 @@ app.post(
   handleValidationErrors,
   UserController.register
 );
+
+app.put(
+  "/auth/update",
+  registerValidation,
+  handleValidationErrors,
+  UserController.updateUser
+);
 app.get("/auth/me", checkAuth, UserController.getMe);
 
 app.get("/auth/:id", UserController.getUser);
