@@ -66,16 +66,11 @@ export const getOne = async (req, res) => {
 export const GetAllPostUser = async (req, res) => {
   try {
     const userId = req.params.id;
-
-    const posts = PostModel.find({ userId: userId });
-
-    if (!posts) {
-      return res.status(404).json({
-        message: "Нет постов",
-      });
-    }
-
-    res.json(post);
+		const posts = await PostModel.find({user: userId})
+		.sort({ createdAt: -1 })
+		.populate("user")
+		.exec();
+	res.json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ошибка при получении" });
