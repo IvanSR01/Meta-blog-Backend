@@ -130,16 +130,14 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const userId = req.params.id;
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const passwordHash = await bcrypt.hash(password, salt);
 
-    const { email, fullName } = req.body;
-
-    await UserModel.updateOne(
+    const { email, fullName, id } = req.body;
+     await UserModel.updateOne(
       {
-        _id: userId,
+        _id: id,
       },
       {
         email,
